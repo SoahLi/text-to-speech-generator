@@ -45,7 +45,7 @@ fi
 # the basename keyword extracts the filename from the path, e.g "content/raw/epub/mybook.epub" becomes "mybook.epub"
 # The '|' operator is used to pipe the output of basename to sed
 # # The sed command removes the file extension from the filename, by searching for the last '.' and everything after it
-BASENAME="$(basename "$FILE_PATH" | sed 's/\.[^.]*$//')"
+BASENAME="$(basename "$FILE_PATH" | sed 's/\..*$//')"
 
 ## Remove the 'content/raw/' prefix from FILE_PATH, if present
 RELATIVE_PATH_NO_EXT="${FILE_PATH#content/raw/}"
