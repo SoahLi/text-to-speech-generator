@@ -20,6 +20,16 @@ pip install -r requirements.txt
   ```bash
   bash create_audiobook.sh -f <path_to_file_with_file_name_and_extension_from_working_dir>
   ```
+  For example, if I had a file named star_wars.txt, I would place the file:
+
+  ```
+  touch content/raw/star_wars.txt
+  ```
+  Then, I would run:
+
+  ```
+  bash create_audiobook.sh -f content/raw/star_wars.txt
+  ```
 
 - After processing, a folder will be created in `content/complete/` named after your file.
 - To play the generated MP4 audiobook, use a tool like `mpv`:
@@ -29,3 +39,8 @@ pip install -r requirements.txt
   ```
 
 Replace `star_wars` with your actual file name.
+
+## 4. Considerations
+- folder structures inside of `content/raw` are mimicked inside of `content/complete`. See `content/raw/pheonix_documentation` for an example
+- The only file types that have been tested are `.txt` and `.md`. See `content/raw/pheonix_documentation` for examples. 
+- Things like validating file names (e.g checking for uniqness inside of `content/raw/epub`) has not been implimented. Be thoughtful about naming your files.
