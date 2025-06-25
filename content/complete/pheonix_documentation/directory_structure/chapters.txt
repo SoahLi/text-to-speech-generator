@@ -1,0 +1,10 @@
+;FFMETADATA1
+title=
+artist=
+
+[CHAPTER]
+TIMEBASE=1/1000
+START=0
+END=494050
+title=Chapter 0
+
