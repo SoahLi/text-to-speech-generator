@@ -42,9 +42,22 @@ if [[ ! -f "$FILE_PATH" ]]; then
   exit 1
 fi
 
+# the basename keyword extracts the filename from the path, e.g "content/raw/epub/mybook.epub" becomes "mybook.epub"
+# The '|' operator is used to pipe the output of basename to sed
+# # The sed command removes the file extension from the filename, by searching for the last '.' and everything after it
 BASENAME="$(basename "$FILE_PATH" | sed 's/\.[^.]*$//')"
+
+## Remove the 'content/raw/' prefix from FILE_PATH, if present
+RELATIVE_PATH_NO_EXT="${FILE_PATH#content/raw/}"
+
+## Remove the file extension from the end of the path
+RELATIVE_PATH_NO_EXT="${RELATIVE_PATH_NO_EXT%.*}"
+
+## Combine COMPLETE_DIR and the relative path (with no extension) using '/'
+COMPLETE_PATH="$COMPLETE_DIR/$RELATIVE_PATH_NO_EXT"
+
+
 EPUB_FILE="$EPUB_DIR/$BASENAME.epub"
-COMPLETE_PATH="$COMPLETE_DIR/$BASENAME"
 
 # Convert to epub if not already in epub dir
 if [[ "$FILE_PATH" != "$EPUB_FILE" ]]; then
@@ -56,5 +69,5 @@ fi
 mkdir -p "$COMPLETE_PATH"
 
 # Run audiblez
-abs_complete_path="$(cd "$COMPLETE_PATH" && pwd)"
+abs_complete_path="$(cd "$COMPLETE_PATH" && pwd)" 
 audiblez "$EPUB_FILE" -v af_sky -o "$abs_complete_path"
