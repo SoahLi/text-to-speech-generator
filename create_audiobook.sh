@@ -28,18 +28,20 @@ RAW_DIR="content/raw"
 EPUB_DIR="$RAW_DIR/epub"
 COMPLETE_DIR="content/complete"
 
-# Find the file in content/raw (recursively, but not in epub)
-MATCHES=( $(find "$RAW_DIR" -type f -not -path "$EPUB_DIR/*" -name "$(basename "$INPUT_FILE")") )
 
-if [[ ${#MATCHES[@]} -eq 0 ]]; then
-  echo "Error: File '$INPUT_FILE' not found in $RAW_DIR."
-  exit 1
-elif [[ ${#MATCHES[@]} -gt 1 ]]; then
-  echo "Error: Multiple files named '$(basename "$INPUT_FILE")' found in $RAW_DIR."
+# Ensure file is in a subfolder of content/raw (not directly in content/raw or in epub)
+if [[ "$INPUT_FILE" == */* ]] && [[ "$INPUT_FILE" != epub/* ]]; then
+  FILE_PATH="$INPUT_FILE"
+else
+  echo "Error: File must be in a subfolder of $RAW_DIR (not directly in $RAW_DIR or in epub/)."
   exit 1
 fi
 
-FILE_PATH="${MATCHES[0]}"
+if [[ ! -f "$FILE_PATH" ]]; then
+  echo "Error: File '$FILE_PATH' not found."
+  exit 1
+fi
+
 BASENAME="$(basename "$FILE_PATH" | sed 's/\.[^.]*$//')"
 EPUB_FILE="$EPUB_DIR/$BASENAME.epub"
 COMPLETE_PATH="$COMPLETE_DIR/$BASENAME"
