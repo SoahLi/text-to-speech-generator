@@ -2,7 +2,7 @@
 
 This project converts any file type into an EPUB, then generates an audiobook (MP4) from it.
 
-## 1. Installation
+## 1. Installation And Dependencies
 
 Clone the repository and set up your environment:
 
@@ -10,6 +10,20 @@ Clone the repository and set up your environment:
 python3.12 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
+```
+
+This project requires [Pandoc](https://pandoc.org/) to convert Markdown and other files to EPUB format.
+
+**Install Pandoc:**
+
+On macOS (using Homebrew):
+```bash
+brew install pandoc
+```
+
+On Ubuntu/Debian:
+```bash
+sudo apt-get install pandoc
 ```
 
 ## 2. Adding Your File
